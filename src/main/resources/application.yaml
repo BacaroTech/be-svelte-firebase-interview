@@ -1,0 +1,11 @@
+ktor:
+    application:
+        modules:
+            - mft.dev.ApplicationKt.module
+    deployment:
+        port: 8080
+postgres:
+  url: "$URL:jdbc:postgresql://localhost:5432/interviews"
+  user: "$USERNAME:postgres"
+  password: "$PASSWORD:postgres"
+  driver: org.postgresql.Driver
