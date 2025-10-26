@@ -33,7 +33,7 @@ CREATE TABLE slots(
     role_id BIGINT NULL REFERENCES event_person_role(id) ON DELETE SET NULL,
     interview_date TIMESTAMP NOT NULL,
     place VARCHAR(128) NOT NULL,
-    topic VARCHAR(128) NOT NULL,
+    topic VARCHAR(128) NULL,
     status slot_status NOT NULL DEFAULT 'UNSIGNED',
-    CHECK ((status = 'UNSIGNED' AND role_id IS NULL) OR (status = 'SIGNED' AND role_id IS NOT NULL))
+    CHECK ((status = 'UNSIGNED' AND role_id IS NULL AND topic IS NULL) OR (status = 'SIGNED' AND role_id IS NOT NULL AND topic IS NOT NULL))
 );
