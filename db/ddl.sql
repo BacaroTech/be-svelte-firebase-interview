@@ -3,7 +3,7 @@ CREATE TYPE slot_status AS ENUM ('SIGNED', 'UNSIGNED');
 
 CREATE TABLE events(
     id BIGSERIAL PRIMARY KEY,
-    uuid UUID UNIQUE,
+    uuid UUID UNIQUE NOT NULL,
     name VARCHAR(256) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE events(
 
 CREATE TABLE people(
     id BIGSERIAL PRIMARY KEY,
-    uuid UUID UNIQUE,
+    uuid UUID UNIQUE NOT NULL,
     first_name VARCHAR(128) NOT NULL,
     last_name VARCHAR(128) NOT NULL,
     email VARCHAR(128) UNIQUE NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE people(
 
 CREATE TABLE event_person_role(
     id BIGSERIAL PRIMARY KEY,
-    uuid UUID UNIQUE,
+    uuid UUID UNIQUE NOT NULL,
     person_id BIGINT NOT NULL REFERENCES people(id),
     event_id BIGINT NOT NULL REFERENCES events(id),
     role role_type NOT NULL,
@@ -29,11 +29,10 @@ CREATE TABLE event_person_role(
 );
 
 CREATE TABLE slots(
-    id BIGSERIAL PRIMARY KEY,
-    uuid UUID UNIQUE,
+    uuid UUID PRIMARY KEY,
     role_id BIGINT NOT NULL REFERENCES event_person_role(id),
     interview_date TIMESTAMP NOT NULL,
-    place VARCHAR(128),
-    topic VARCHAR(128),
+    place VARCHAR(128) NOT NULL,
+    topic VARCHAR(128) NOT NULL,
     status slot_status NOT NULL DEFAULT 'UNSIGNED'
 );
