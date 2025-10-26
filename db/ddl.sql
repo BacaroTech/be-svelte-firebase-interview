@@ -22,17 +22,18 @@ CREATE TABLE people(
 CREATE TABLE event_person_role(
     id BIGSERIAL PRIMARY KEY,
     uuid UUID UNIQUE NOT NULL,
-    person_id BIGINT NOT NULL REFERENCES people(id),
-    event_id BIGINT NOT NULL REFERENCES events(id),
+    person_id BIGINT NOT NULL REFERENCES people(id) ON DELETE CASCADE,
+    event_id BIGINT NOT NULL REFERENCES events(id) ON DELETE CASCADE,
     role role_type NOT NULL,
     UNIQUE (person_id, event_id, role)
 );
 
 CREATE TABLE slots(
     uuid UUID PRIMARY KEY,
-    role_id BIGINT NULL REFERENCES event_person_role(id),
+    role_id BIGINT NULL REFERENCES event_person_role(id) ON DELETE SET NULL,
     interview_date TIMESTAMP NOT NULL,
     place VARCHAR(128) NOT NULL,
     topic VARCHAR(128) NOT NULL,
-    status slot_status NOT NULL DEFAULT 'UNSIGNED'
+    status slot_status NOT NULL DEFAULT 'UNSIGNED',
+    CHECK ((status = 'UNSIGNED' AND role_id IS NULL) OR (status = 'SIGNED' AND role_id IS NOT NULL))
 );
