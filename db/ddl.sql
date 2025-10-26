@@ -30,7 +30,7 @@ CREATE TABLE event_person_role(
 
 CREATE TABLE slots(
     uuid UUID PRIMARY KEY,
-    role_id BIGINT NOT NULL REFERENCES event_person_role(id),
+    role_id BIGINT NULL REFERENCES event_person_role(id),
     interview_date TIMESTAMP NOT NULL,
     place VARCHAR(128) NOT NULL,
     topic VARCHAR(128) NOT NULL,
